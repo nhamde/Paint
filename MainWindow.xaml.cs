@@ -27,12 +27,11 @@ namespace Paint
         Line objLine = null;
         string drawMode;
         Point initialPt;
-        string color;
+        Brush brush;
         int size;
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -47,7 +46,25 @@ namespace Paint
         }
         private void brushColorChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            string[] selectedColor = brushColor.SelectedItem.ToString().Split();
+            switch(selectedColor[1])
+            {
+                case "Red":
+                    brush = Brushes.Red;
+                    break;
+                case "Green":
+                    brush = Brushes.Green;
+                    break;
+                case "Blue":
+                    brush = Brushes.Blue;
+                    break;
+                case "Yellow":
+                    brush = Brushes.Yellow;
+                    break;
+                case "Orange":
+                    brush = Brushes.Orange;
+                    break;
+            }
         }
         private void modeChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -68,7 +85,7 @@ namespace Paint
                 paintStarted = true;
                 Point startPt = e.GetPosition(canvas);
                 objLine = new Line();
-                objLine.Stroke = Brushes.Brown;
+                objLine.Stroke = brush;
                 objLine.StrokeThickness = size;
                 objLine.X1 = startPt.X;
                 objLine.Y1 = startPt.Y;
@@ -81,7 +98,7 @@ namespace Paint
                 paintStarted = true;
                 initialPt = e.GetPosition(canvas);
                 objLine = new Line();
-                objLine.Stroke = Brushes.Brown;
+                objLine.Stroke = brush;
                 objLine.StrokeThickness = size;
                 objLine.X1 = initialPt.X;
                 objLine.Y1 = initialPt.Y;
@@ -100,7 +117,7 @@ namespace Paint
                 else if (drawMode == "freeStyle")
                 {
                     objLine = new Line();
-                    objLine.Stroke = Brushes.Brown;
+                    objLine.Stroke = brush;
                     objLine.StrokeThickness = size;
                     objLine.X1 = initialPt.X;
                     objLine.Y1 = initialPt.Y;
