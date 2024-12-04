@@ -16,7 +16,7 @@
         <ToolBar Height="36" Width="800" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="-1" Canvas.Top="-37">
         <Button Name="clearBtn" Content="Clear" Canvas.Left="433" Canvas.Top="252" Width="50" Click="Button_Click"/>
         <Label Content="Brush Size:" Canvas.Left="87" Canvas.Top="-37" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <ComboBox Name="brushSize" SelectedValue="" SelectionChanged="brushSizeChanged" Canvas.Left="212" Height="36" Width="50" AllowDrop="True" Canvas.Top="-37" HorizontalAlignment="Left" VerticalAlignment="Center">
+        <ComboBox Name="brushSize" SelectionChanged="brushSizeChanged" Canvas.Left="212" Height="36" Width="50" AllowDrop="True" Canvas.Top="-37" HorizontalAlignment="Left" VerticalAlignment="Center">
             <ComboBoxItem Content="2"></ComboBoxItem>
             <ComboBoxItem Content="4"></ComboBoxItem>
             <ComboBoxItem Content="6"></ComboBoxItem>
@@ -32,14 +32,14 @@
             <ComboBoxItem Content="Yellow"></ComboBoxItem>
         </ComboBox>
         <Label Content="Mode:" Canvas.Left="339" Canvas.Top="-37" Height="36" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <ComboBox Name="mode" SelectionChanged="modeChanged" Canvas.Left="339" Height="36" Width="80" AllowDrop="True" Canvas.Top="-37" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <ComboBoxItem Content="Free Draw"></ComboBoxItem>
-            <ComboBoxItem Content="Straight Line"></ComboBoxItem>
+        <ComboBox Name="mode" SelectionChanged="modeChanged" Canvas.Left="339" Height="36" Width="80" AllowDrop="True" Canvas.Top="-37" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <ComboBoxItem Content="FreeDraw"></ComboBoxItem>
+            <ComboBoxItem Content="StraightLine"></ComboBoxItem>
         </ComboBox>
         </ToolBar>
         <Canvas Name="canvas" Grid.Row="1" MouseDown="mouseDown" MouseMove="mouseMove" MouseUp="mouseUp">
             <Canvas.Background>
-                <SolidColorBrush Color="White" Opacity="0"/>
+                <SolidColorBrush Color="Black" Opacity="0"/>
             </Canvas.Background>
         </Canvas>
     </Grid>

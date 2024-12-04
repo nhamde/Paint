@@ -23,7 +23,12 @@ namespace Paint
 
     public partial class MainWindow : Window
     {
+        bool paintStarted = false;
         Line objLine = null;
+        string drawMode;
+        Point initialPt;
+        string color;
+        int size;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,46 +41,82 @@ namespace Paint
         }
 
         private void brushSizeChanged(object sender, SelectionChangedEventArgs e)
-        { 
-            ComboBox cb = sender as 
+        {
+            string[] selectedSize = brushSize.SelectedItem.ToString().Split();
+            size = int.Parse(selectedSize[1]);
         }
-
-
         private void brushColorChanged(object sender, SelectionChangedEventArgs e)
         {
             
         }
-
         private void modeChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            string[] selectedMode = mode.SelectedItem.ToString().Split();
+            if (selectedMode[1] == "FreeDraw")
+            {
+                drawMode = "freeStyle";
+            }
+            else
+            {
+                drawMode = "straightLine";
+            }
         }
-
         private void mouseDown(object sender, MouseButtonEventArgs e)
         {
-            Point startPt = e.GetPosition(canvas);
-            objLine = new Line();
-            objLine.Stroke = Brushes.Brown;
-            objLine.X1 = startPt.X;
-            objLine.Y1 = startPt.Y;
-            objLine.X2 = startPt.X;
-            objLine.Y2 = startPt.Y;
-
-            canvas.Children.Add(objLine);
+            if (drawMode == "straightLine")
+            {
+                paintStarted = true;
+                Point startPt = e.GetPosition(canvas);
+                objLine = new Line();
+                objLine.Stroke = Brushes.Brown;
+                objLine.StrokeThickness = size;
+                objLine.X1 = startPt.X;
+                objLine.Y1 = startPt.Y;
+                objLine.X2 = startPt.X;
+                objLine.Y2 = startPt.Y;
+                canvas.Children.Add(objLine);
+            }
+            else
+            {
+                paintStarted = true;
+                initialPt = e.GetPosition(canvas);
+                objLine = new Line();
+                objLine.Stroke = Brushes.Brown;
+                objLine.StrokeThickness = size;
+                objLine.X1 = initialPt.X;
+                objLine.Y1 = initialPt.Y;
+            }
         }
         private void mouseMove(object sender, MouseEventArgs e)
         {
-            if (objLine == null)
-                return;
+            if (paintStarted)
+            {
+                if (drawMode == "straightLine")
+                {   
+                    Point currentPt = e.GetPosition(relativeTo: canvas);
+                    objLine.X2 = currentPt.X;
+                    objLine.Y2 = currentPt.Y;
+                }
+                else if (drawMode == "freeStyle")
+                {
+                    objLine = new Line();
+                    objLine.Stroke = Brushes.Brown;
+                    objLine.StrokeThickness = size;
+                    objLine.X1 = initialPt.X;
+                    objLine.Y1 = initialPt.Y;
 
-            Point currentPt = e.GetPosition(relativeTo: canvas);
-            objLine.X2 = currentPt.X;
-            objLine.Y2 = currentPt.Y;
+                    Point currentPt = e.GetPosition(relativeTo: canvas);
+                    objLine.X2 = currentPt.X;
+                    objLine.Y2 = currentPt.Y;
+                    canvas.Children.Add(objLine);
+                    initialPt = currentPt;
+                }
+            }
         }
-
         private void mouseUp(object sender, MouseButtonEventArgs e)
         {
             objLine = null;
+            paintStarted = false;
         }
     }
 }
